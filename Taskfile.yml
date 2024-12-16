@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+  remove-build:
+    cmds:
+      - cmd: 'rm -rf -- ./build'
+  init-build-file:
+    cmds:
+      - cmd: 'mkdir ./build'
+  build:
+    cmds:
+      - 'cmake -D CMAKE_BUILD_TYPE=Debug {{.USER_WORKING_DIR}}; make'
+  rebuild:
+    cmds:
+      - task: remove-build
+      - task: init-build-file
+      - task: build
