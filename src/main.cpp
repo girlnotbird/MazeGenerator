@@ -1,9 +1,16 @@
-#include "jm_mazegen.h"
+#include <iostream>
+#include "maze.hpp"
+#include "mazebuilder.hpp"
+#include "renderer.hpp"
 
 int main()
 {
-  std::string name = "A-maze-ing";
-  auto my_maze = create_maze<8, 8>(name);
-  my_maze->render();
-  return 0;
+    std::srand(std::clock());
+    CommandLineRenderer renderer{&std::cout};
+
+    AsciiMaze myMaze{100, 100};
+    MazeBuilder::wilsonAlgorithm(myMaze);
+    renderer.render(myMaze.createRenderFrame());
+
+    return 0;
 }

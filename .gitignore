@@ -7,6 +7,14 @@
 !.vscode/extensions.json
 *.code-workspace
 
+# Clion
+.cache/
+.cache/*
+.idea/**/*
+.idea/*
+.idea/
+.idea/editor.xml
+
 # Private Node Modules
 node_modules/
 
