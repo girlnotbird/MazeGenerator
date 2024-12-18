@@ -198,14 +198,15 @@ void MazeBuilder::wilsonAlgorithm(AsciiMaze& maze)
                         MazeTile::direction complementDir = getComplementDir(adjDir);
                         firstEntry.second->adjFlags ^= adjDir;
                         secondEntry.second->adjFlags ^= complementDir;
+                        firstEntry.second->connected = true;
                     }
                     // TODO: Make this also change the bitmasks to connect the edges
                     connectedTiles.insert({std::move(firstEntry)});
                     unconnectedTiles.erase(firstEntry.first);
                 }
                 tilesInCurrentWalk.erase(tilesInCurrentWalk.begin(), tilesInCurrentWalk.end());
-                previousTile = currentTile;
                 currentTile = pickRandomFromMap(unconnectedTiles);
+                previousTile = currentTile;
                 nextCoords = currentTile->first;
                 terminated = true;
             }
@@ -251,10 +252,7 @@ void MazeBuilder::wilsonAlgorithm(AsciiMaze& maze)
     while (unconnectedTiles.empty() != true)
     {
         auto start = pickRandomFromMap(unconnectedTiles);
-        auto temp = pickRandomFromMap(unconnectedTiles);
-        auto end = temp != unconnectedTiles.end()
-                       ? temp
-                       : pickRandomFromMap(connectedTiles);
+        auto end = connectedTiles.empty() ? pickRandomFromMap(unconnectedTiles) : pickRandomFromMap(connectedTiles);
         currentTile = start;
         nextCoords = currentTile->first;
 
